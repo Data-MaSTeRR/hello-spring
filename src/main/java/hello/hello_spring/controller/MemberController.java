@@ -5,8 +5,11 @@ import hello.hello_spring.domain.Member;
 import hello.hello_spring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 // Controller: 외부 요청 받기
 @Controller
@@ -34,6 +37,13 @@ public class MemberController {
 
         memberService.join(member);
         return "redirect:/"; // 회원 등록 후, 홈화면으로 리다이렉트
+    }
+
+    @GetMapping("/members")
+    public String list(Model model) {
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members); // View로 members 넘기기
+        return "members/memberList";
     }
 
 }
