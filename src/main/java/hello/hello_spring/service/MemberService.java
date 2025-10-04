@@ -10,7 +10,12 @@ import java.util.Optional;
 public class MemberService {
 
     // 다형성을 만족시키는 객체, 직접 접근 못하고, 한번 넣으면 수정못하게 함
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    // => DI (의존성주입) : 내가 직접 new로 객체 만드는 것이 아니라, 밖에서 사용하도록 하기
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemoryMemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     // @ 회원 가입
     public Long join(Member member) {
